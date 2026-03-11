@@ -159,7 +159,7 @@ export default function Dashboard({ onNavigate, user }) {
               </div>
               <FiArrowRight size={16} color="var(--text-dim)" />
             </button>
-            <button className="action-card" onClick={() => onNavigate("learning")}>
+            <button className="action-card" onClick={() => onNavigate("gap-detector")}>
               <FiCpu size={20} color="var(--teal)" />
               <div>
                 <div className="action-title">Detect Gaps</div>

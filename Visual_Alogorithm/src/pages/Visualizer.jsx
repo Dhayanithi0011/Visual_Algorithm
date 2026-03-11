@@ -77,7 +77,7 @@ function TopbarCallStack({ step }) {
   );
 }
 
-export default function Visualizer({ user }) {
+export default function Visualizer({ user, onProgramWatched }) {
   const defaultChapter = CHAPTERS[0];
   const defaultProgram = CHAPTERS[0].programs[0];
 
@@ -156,6 +156,8 @@ export default function Visualizer({ user }) {
       setHasRun(true);
       setIsRunning(false);
       setCodeDirty(false);
+      // Notify parent that this program has been watched
+      onProgramWatched?.(activeProgram.key);
       if (user?.uid) {
         saveVisualizerSession(user.uid, code, activeProgram.label, s.length);
       }

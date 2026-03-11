@@ -1,11 +1,11 @@
-import { FiCode, FiCpu, FiGrid, FiHome, FiLogIn, FiLogOut } from "react-icons/fi";
+import { FiCode, FiCpu, FiGrid, FiHome, FiLogIn, FiLogOut, FiTarget } from "react-icons/fi";
 import "./Navbar.css";
 
 const navItems = [
-  { id: "home", label: "Home", icon: FiHome },
-  { id: "visualizer", label: "Visualizer", icon: FiCode },
-  { id: "learning", label: "Gap Detector", icon: FiCpu },
-  { id: "dashboard", label: "Dashboard", icon: FiGrid },
+  { id: "home",         label: "Home",        icon: FiHome   },
+  { id: "visualizer",   label: "Visualizer",  icon: FiCode   },
+  { id: "gap-detector", label: "Gap Detector",icon: FiTarget },
+  { id: "dashboard",    label: "Dashboard",   icon: FiGrid   },
 ];
 
 export default function Navbar({ activePage, onNavigate, user, loading, onSignIn, onSignOut }) {
