@@ -177,7 +177,7 @@ export default function LearningPath({ user }) {
     <div className="lp-page">
       <div className="lp-header">
         <div>
-          <h2 className="lp-title">AI Learning Gap Detector</h2>
+          <h2 className="lp-title">AI Learning Quiz</h2>
           <p className="lp-sub">Upload quiz results to find hidden knowledge gaps and get a targeted learning path.</p>
         </div>
       </div>

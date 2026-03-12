@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── User progress (quiz scores, watched programs, history) ──────────────
+    // Each user can only read/write their own progress document.
+    match /users/{uid}/progress/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // ── Legacy visualizer sessions ──────────────────────────────────────────
+    match /sessions/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.uid;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+    }
+
+    // ── Legacy gap analyses ─────────────────────────────────────────────────
+    match /gap_analyses/{docId} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.uid;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.uid;
+    }
+  }
+}

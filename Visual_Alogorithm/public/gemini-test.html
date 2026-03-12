@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gemini API Key Tester</title>
+  <style>
+    body { font-family: monospace; background: #0f0f0f; color: #ccc; padding: 30px; max-width: 800px; }
+    h2 { color: #c8f542; }
+    button { background: #c8f542; color: #000; border: none; padding: 10px 22px; font-size: 14px; cursor: pointer; border-radius: 6px; font-weight: bold; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    #result { margin-top: 20px; background: #1a1a1a; border: 1px solid #333; padding: 16px; border-radius: 8px; white-space: pre-wrap; min-height: 80px; line-height: 1.7; }
+    .ok  { color: #4ade80; }
+    .err { color: #f87171; }
+    .info{ color: #60a5fa; }
+    .warn{ color: #fbbf24; }
+  </style>
+</head>
+<body>
+  <h2>🔑 Gemini API Key Diagnostic</h2>
+  <p style="color:#999">Tests your key against every model + API version combination.</p>
+  <button id="btn" onclick="runTest()">▶ Run Diagnostic</button>
+  <div id="result">Click the button to start...</div>
+
+<script>
+const KEY    = "AIzaSyDwpWX9dgzAgOf0Mo6-8XTCUmnKTP3DG5o";
+const MODELS = ["gemini-2.0-flash", "gemini-2.0-flash-lite", "gemini-1.5-flash"];
+const VERS   = ["v1", "v1beta"];
+
+const out = document.getElementById("result");
+const btn = document.getElementById("btn");
+
+function log(msg, cls="") {
+  out.innerHTML += `<span class="${cls}">${msg}</span>\n`;
+}
+
+async function testCombo(model, ver) {
+  const url = `https://generativelanguage.googleapis.com/${ver}/models/${model}:generateContent?key=${KEY}`;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: "Reply with just the word: hello" }] }],
+        generationConfig: { maxOutputTokens: 10, temperature: 0 }
+      })
+    });
+    const bodyText = await res.text();
+    if (res.ok) {
+      const data = JSON.parse(bodyText);
+      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? "(empty)";
+      return { status: res.status, ok: true, text };
+    } else {
+      let msg = "";
+      try { msg = JSON.parse(bodyText)?.error?.message || bodyText.slice(0, 150); } catch { msg = bodyText.slice(0, 150); }
+      return { status: res.status, ok: false, msg };
+    }
+  } catch(e) {
+    return { status: 0, ok: false, msg: `Network error: ${e.message}` };
+  }
+}
+
+async function runTest() {
+  out.innerHTML = "";
+  btn.disabled = true;
+  log(`API Key: ${KEY.slice(0,14)}...${KEY.slice(-4)}\n`, "info");
+
+  let anyWorked = false;
+
+  for (const model of MODELS) {
+    log(`\nModel: ${model}`, "info");
+    for (const ver of VERS) {
+      log(`  Testing /${ver}/... `, "");
+      const r = await testCombo(model, ver);
+      if (r.ok) {
+        log(`  ✅ HTTP ${r.status} on /${ver}/ — response: "${r.text}"`, "ok");
+        anyWorked = true;
+        break; // no need to test v1beta if v1 works
+      } else if (r.status === 404) {
+        log(`  ⚠️  HTTP 404 on /${ver}/ — model not found in this API version`, "warn");
+      } else if (r.status === 0) {
+        log(`  ❌ ${r.msg}`, "err");
+        log("\n\n❌ NETWORK BLOCKED — The browser cannot reach generativelanguage.googleapis.com", "err");
+        log("This is a network/firewall issue, not an API key issue.", "warn");
+        log("Solutions:", "warn");
+        log("  1. Try a different network (mobile hotspot, VPN)", "warn");
+        log("  2. Route Gemini calls through your FastAPI backend instead", "warn");
+        btn.disabled = false;
+        return;
+      } else {
+        log(`  ❌ HTTP ${r.status} — ${r.msg}`, "err");
+      }
+    }
+  }
+
+  log("\n────────────────────────────────", "info");
+  if (anyWorked) {
+    log("✅ SUCCESS — Gemini API works from your browser!", "ok");
+    log("Next step: Stop the Vite server (Ctrl+C) and run npm run dev again.", "info");
+  } else {
+    log("❌ ALL MODELS RETURNED 404", "err");
+    log("\nThis usually means one of:", "warn");
+    log("  1. The key was just created and hasn't activated yet (wait 2-5 minutes)", "warn");
+    log("  2. The key has API restrictions set in Google Cloud Console", "warn");
+    log("     → Go to console.cloud.google.com → APIs & Services → Credentials", "warn");
+    log("     → Find your key → check 'API restrictions' is set to 'Don't restrict'", "warn");
+    log("  3. The 'Generative Language API' is not enabled for your project", "warn");
+    log("     → Go to console.cloud.google.com → APIs & Services → Enable APIs", "warn");
+    log("     → Search 'Generative Language API' → Enable it", "warn");
+    log("\nGet a fresh unrestricted key: https://aistudio.google.com/apikey", "info");
+  }
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>

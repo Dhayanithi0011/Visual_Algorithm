@@ -1,0 +1,23 @@
+# Python backend
+Backend/.venv/
+Backend/venv/
+Backend/__pycache__/
+Backend/*.pyc
+*.pyc
+__pycache__/
+
+# Node / React frontend
+Visual_Alogorithm/node_modules/
+Visual_Alogorithm/dist/
+
+# Env files — NEVER commit real Firebase keys
+.env
+.env.local
+Visual_Alogorithm/.env
+Visual_Alogorithm/.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

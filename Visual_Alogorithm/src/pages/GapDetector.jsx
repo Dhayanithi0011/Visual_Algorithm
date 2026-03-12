@@ -514,7 +514,7 @@ function GapResults({ scores, onRetake }) {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// MAIN GAP DETECTOR PAGE
+// MAIN Quiz PAGE
 // ─────────────────────────────────────────────────────────────────
 export default function GapDetector({
   user,
@@ -557,7 +557,7 @@ export default function GapDetector({
     return (
       <div className="gd-page">
         <div className="gd-breadcrumb">
-          <button className="bc-btn" onClick={() => setView("chapters")}>Gap Detector</button>
+          <button className="bc-btn" onClick={() => setView("chapters")}>Quiz</button>
           <FiChevronRight size={13} color="#555" />
           <span className="bc-active">{activeProgram.label} Quiz</span>
         </div>
@@ -604,7 +604,7 @@ export default function GapDetector({
         <div className="gd-header-left">
           <FiTarget size={26} color="#7c5cbf" />
           <div>
-            <h2 className="gd-intro-title">Gap Detector</h2>
+            <h2 className="gd-intro-title">Quiz</h2>
             <p className="gd-intro-sub">
               Watch each program in the Visualizer first, then take its quiz.
               Score ≥{PASS_SCORE}% to unlock the next quiz in the chapter.

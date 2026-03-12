@@ -1,0 +1,28 @@
+.speed-control { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.speed-label { font-size: 11px; color: var(--text-dim); }
+.speed-select {
+  background: #1e1e2e;
+  color: #c9cdd9;
+  border: 1px solid #3a3a5c;
+  border-radius: var(--radius-sm);
+  padding: 3px 8px 3px 7px;
+  font-size: 11px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6b8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 22px;
+  min-width: 64px;
+  transition: border-color 0.12s;
+}
+.speed-select:hover  { border-color: #5a5a7a; }
+.speed-select:focus  { border-color: var(--accent); }
+.speed-select option {
+  background: #1e1e2e;
+  color: #c9cdd9;
+}

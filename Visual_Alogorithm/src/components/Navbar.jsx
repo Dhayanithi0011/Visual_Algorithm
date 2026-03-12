@@ -4,7 +4,7 @@ import "./Navbar.css";
 const navItems = [
   { id: "home",         label: "Home",        icon: FiHome   },
   { id: "visualizer",   label: "Visualizer",  icon: FiCode   },
-  { id: "gap-detector", label: "Gap Detector",icon: FiTarget },
+  { id: "gap-detector", label: "Quiz",icon: FiTarget },
   { id: "dashboard",    label: "Dashboard",   icon: FiGrid   },
 ];
 

@@ -29,7 +29,7 @@
   margin: 0;
 }
 
-/* Header with avatar */
+/* Header with avatar + streak */
 .dash-header-inner {
   display: flex;
   align-items: center;
@@ -41,6 +41,109 @@
   border-radius: 50%;
   border: 2px solid var(--border);
   flex-shrink: 0;
+  object-fit: cover;
+}
+.dash-avatar-placeholder {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  background: #2d2d30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #858585;
+}
+.dash-header-text { display: flex; flex-direction: column; gap: 2px; }
+
+/* Name + streak badge row */
+.dash-header-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ── Streak badge ─────────────────────────────────────────── */
+.dash-streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px 4px 7px;
+  background: #252526;
+  border: 1px solid #3e3e42;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  font-family: var(--font-sans);
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* Zero state — always visible, dim gray, no flame glow */
+.dash-streak-badge.zero {
+  opacity: 0.55;
+  border-color: #333;
+}
+.dash-streak-badge.zero:hover {
+  opacity: 0.8;
+  border-color: #555;
+}
+.dash-streak-badge.zero .dsb-flame svg path {
+  fill: #666;   /* gray flame when no streak */
+}
+.dash-streak-badge.zero .dsb-count {
+  color: #666;
+}
+
+/* Active state — shines with orange glow */
+.dash-streak-badge.active {
+  border-color: rgba(255,130,0,0.6);
+  background: rgba(255,80,0,0.1);
+  box-shadow: 0 0 0 0 rgba(255,110,0,0);
+  animation: streakBadgeShine 2.4s ease-in-out infinite;
+}
+.dash-streak-badge.active:hover {
+  border-color: #ff7700;
+  background: rgba(255,100,0,0.18);
+  box-shadow: 0 0 12px rgba(255,110,0,0.4);
+  animation: none;
+}
+@keyframes streakBadgeShine {
+  0%   { box-shadow: 0 0 0px  rgba(255,110,0,0.0); border-color: rgba(255,130,0,0.4); }
+  40%  { box-shadow: 0 0 10px rgba(255,130,0,0.55); border-color: rgba(255,160,0,0.8); }
+  60%  { box-shadow: 0 0 14px rgba(255,140,0,0.65); border-color: rgba(255,180,0,0.9); }
+  100% { box-shadow: 0 0 0px  rgba(255,110,0,0.0); border-color: rgba(255,130,0,0.4); }
+}
+
+.dsb-flame {
+  display: flex;
+  align-items: center;
+}
+/* Flame glows and pulses only when active */
+.dash-streak-badge.active .dsb-flame {
+  animation: flameBadgePulse 2s ease-in-out infinite;
+}
+@keyframes flameBadgePulse {
+  0%,100% { filter: drop-shadow(0 0 2px rgba(255,120,0,0.5)); }
+  50%      { filter: drop-shadow(0 0 6px rgba(255,180,0,1.0)); }
+}
+
+.dsb-count {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d4d4d4;
+  line-height: 1;
+}
+.dsb-freezes {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 2px;
+  opacity: 0.85;
 }
 
 .dash-header { margin-bottom: 28px; }

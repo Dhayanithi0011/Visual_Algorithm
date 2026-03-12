@@ -1,8 +1,8 @@
-# VisuAlgo — Real-Time Code Visualizer + AI Gap Detector
+# VisuAlgo — Real-Time Code Visualizer + AI Quiz
 
 A full-stack college Tech Day project combining:
 - **Code Visualizer**: Step through Python/JS code and watch memory, call stacks, and sorting animations live.
-- **AI Gap Detector**: Upload quiz results and get a concept dependency graph + personalized learning path.
+- **AI Quiz**: Upload quiz results and get a concept dependency graph + personalized learning path.
 
 ---
 
@@ -22,7 +22,7 @@ visualgo-project/
 │   │   ├── Home.css
 │   │   ├── Visualizer.jsx    # Code visualizer (step-through)
 │   │   ├── Visualizer.css
-│   │   ├── LearningPath.jsx  # AI gap detector + learning path
+│   │   ├── LearningPath.jsx  # AI Quiz + learning path
 │   │   ├── LearningPath.css
 │   │   ├── Dashboard.jsx     # Progress dashboard
 │   │   └── Dashboard.css
@@ -95,7 +95,7 @@ uvicorn main:app --reload --port 8000
 1. Open the **Visualizer** — select "Factorial" — press Run & Visualize
 2. Step through with controls, show call stack growing and shrinking
 3. Switch to "Bubble Sort" — show animated bars swapping
-4. Open **Gap Detector** — select "ML Quiz Result" — show concept map
+4. Open **Quiz** — select "ML Quiz Result" — show concept map
 5. Show blind spots highlighted in red + personalized learning path
 6. Open **Dashboard** — show progress tracking
 
